@@ -351,7 +351,7 @@
 </div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
-const apiKey = "AIzaSyD_kY4nYjb6YX8KoYUaVd-pxcEKQlDr7Is";
+const apiKey = "AIzaSyDunjM7Z8sajJaRgDPPD7XETfwOPv4OO_Y";
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 async function callGemini(prompt, systemInstruction) {
@@ -412,14 +412,14 @@ Belirli bir şehir için: [HARITA: SEHIR | Yer Adı | Enlem | Boylam]
         }
 
         let isSong = false, songEmotion = "neşeli", songLyrics = "";
-        const songMatch = response.match(/\[SARKI_BASLA:(.*?)\]([\s\S]*?)\[SARKI_BITIR\]/);
+        const songMatch = response.match(/\[SARKI_BASLA:(.*?)\]([\s\S]*?)(?:\[SARKI_BITIR\]|\[SIIR_BITIR\]|$)/);
         if (songMatch) {
             isSong = true; songEmotion = songMatch[1].trim(); songLyrics = songMatch[2].trim();
             response = response.replace(songMatch[0], `<div class="p-3 bg-gradient-to-r from-pink-50 to-rose-50 text-rose-800 rounded-xl my-3 italic text-center font-bold shadow-sm border border-rose-200 text-sm leading-relaxed">🎵<br>${songLyrics.replace(/\n/g, '<br>')}<br>🎵</div>`);
         }
 
         let isPoem = false, poemEmotion = "gururlu", poemLyrics = "";
-        const poemMatch = response.match(/\[SIIR_BASLA:(.*?)\]([\s\S]*?)\[SIIR_BITIR\]/);
+        const poemMatch = response.match(/\[SIIR_BASLA:(.*?)\]([\s\S]*?)(?:\[SIIR_BITIR\]|\[SARKI_BITIR\]|$)/);
         if (poemMatch) {
             isPoem = true; poemEmotion = poemMatch[1].trim(); poemLyrics = poemMatch[2].trim();
             response = response.replace(poemMatch[0], `<div class="p-3 bg-gradient-to-r from-emerald-50 to-teal-50 text-teal-800 rounded-xl my-3 italic text-center font-bold shadow-sm border border-teal-200 text-sm leading-relaxed">📜<br>${poemLyrics.replace(/\n/g, '<br>')}<br>📜</div>`);
@@ -795,3 +795,5 @@ async function readDiary() {
 </script>
 </body>
 </html>
+
+
